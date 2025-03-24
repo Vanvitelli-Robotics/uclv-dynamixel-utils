@@ -291,11 +291,11 @@ bool Motor::disableTorque() {
     uint8_t dxl_error = 0;
     int dxl_comm_result = packetHandler_->write1ByteTxRx(portHandler_, getId(), getAddrTorqueEnable(), 0, &dxl_error);
     if (dxl_comm_result != COMM_SUCCESS || dxl_error != 0) {
-        std::cerr << ERROR_COLOR <<"Failed" << CRESET <<" to disable torque for motor ID: " << getId() << std::endl;
+        std::cerr << ERROR_COLOR <<"Failed" << CRESET <<" to disable torque for motor ID: " << static_cast<int>(getId()) << "Error = " << dxl_error << std::endl;
         return false;
     }
     else {
-        std::cout << "Torque "<< SUCCESS_COLOR <<"disable" << CRESET << " for motor ID: " << getId() << std::endl;
+        std::cout << "Torque "<< SUCCESS_COLOR <<"disable" << CRESET << " for motor ID: " << static_cast<int>(getId()) << std::endl;
     }
     return true;
 }

@@ -11,6 +11,7 @@
 #include "motor.hpp"
 #include "fingermotor.hpp"
 #include "wristmotor.hpp"
+#include "palm_sensor.hpp"
 
 namespace uclv::dynamixel_utils
 {
@@ -36,6 +37,8 @@ namespace uclv::dynamixel_utils
         std::unique_ptr<dynamixel::GroupSyncRead> groupSyncRead_ = nullptr;   ///< Group sync read handler.
         std::unique_ptr<dynamixel::GroupBulkRead> groupBulkRead_ = nullptr;   ///< Group bulk read handler.
         std::unique_ptr<dynamixel::GroupBulkWrite> groupBulkWrite_ = nullptr; ///< Group bulk write handler.
+
+        std::shared_ptr<PalmSensor> palm_sensor_ ;          // Pointer to the palm sensor
 
     public:
         /**
@@ -254,5 +257,27 @@ namespace uclv::dynamixel_utils
          * @return A vector of positions corresponding to the motor identifiers.
          */
         std::vector<uint32_t> readMotorsPositions(const std::vector<uint8_t> &ids);
+
+        /******** CODE FOR PALM SENSOR *******/
+        /**
+         * @brief Gets the palm sensor.
+         *
+         * @return A shared pointer to the palm sensor.
+         */
+        std::shared_ptr<PalmSensor> getPalmSensor();
+
+        /**
+         * @brief Creates the palm sensor.
+         *
+         * @return A shared pointer to the created palm sensor.
+         */
+        std::shared_ptr<PalmSensor> createPalmSensor();
+
+         /**
+         * @brief Reads the current state of the palm sensor.
+         *
+         * @return Distance measured.
+         */
+        uint16_t readPalmSensorState();
     };
 }

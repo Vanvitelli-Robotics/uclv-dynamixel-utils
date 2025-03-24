@@ -36,6 +36,7 @@ Hand::Hand(const std::string &serial_port, int baudrate, float protocol_version)
 {
     portHandler_ = dynamixel::PortHandler::getPortHandler(serial_port.c_str());
     packetHandler_ = dynamixel::PacketHandler::getPacketHandler(protocol_version);
+
 }
 
 /**
@@ -52,7 +53,9 @@ Hand::Hand()
  * @brief Destructor for Hand. Cleans up the port and packet handlers.
  */
 Hand::~Hand()
-{
+{   
+    portHandler_->clearPort();
+    portHandler_->closePort();
     delete portHandler_;
     delete packetHandler_;
 }
@@ -691,4 +694,40 @@ std::vector<uint32_t> Hand::readMotorsPositions(const std::vector<uint8_t> &ids)
     }
 
     return positions;
+}
+
+ /******** CODE FOR PALM SENSOR *******/
+
+
+/**
+ * @brief Gets the palm sensor.
+ *
+ * @return A shared pointer to the palm sensor.
+ */
+std::shared_ptr<PalmSensor> Hand::getPalmSensor(){
+    return palm_sensor_;
+}
+
+/**
+ * @brief Creates the palm sensor.
+ *
+ * @return A shared pointer to the created palm sensor.
+ */
+std::shared_ptr<PalmSensor> Hand::createPalmSensor(){
+    palm_sensor_ = std::make_shared<PalmSensor>(serial_port_, baudrate_, protocol_version_, portHandler_, packetHandler_);
+    return palm_sensor_;
+}
+
+/**
+ * @brief Reads the current state of the palm sensor.
+ *
+ * @return Distance measured.
+ */
+uint16_t Hand::readPalmSensorState(){
+
+    uint16_t distance = 0;
+    // Read the distance from the palm sensor
+    distance = palm_sensor_->readFromPalmSensor();
+    
+    return distance;
 }

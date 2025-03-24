@@ -17,23 +17,24 @@ find_package(dynamixel_sdk REQUIRED)
 
 if(BUILD_TESTING)
   find_package(ament_lint_auto REQUIRED)
-  # the following line skips the linter which checks for copyrights
-  # comment the line when a copyright and license is added to all source files
-  set(ament_cmake_copyright_FOUND TRUE)
+  # the following line skips the linter which checks for copylefts
+  # comment the line when a copyleft and license is added to all source files
+  set(ament_cmake_copyleft_FOUND TRUE)
   # the following line skips cpplint (only works in a git repo)
   # comment the line when this package is in a git repo and when
-  # a copyright and license is added to all source files
+  # a copyleft and license is added to all source files
   set(ament_cmake_cpplint_FOUND TRUE)
   ament_lint_auto_find_test_dependencies()
 endif()
 
 include_directories(include)
 
-add_library(uclv_dynamixel_utils
+add_library(uclv_dynamixel_utils SHARED
   src/hand.cpp
   src/motor.cpp
   src/fingermotor.cpp
   src/wristmotor.cpp
+  src/palm_sensor.cpp
 )
 
 ament_target_dependencies(uclv_dynamixel_utils

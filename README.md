@@ -48,7 +48,7 @@ public:
             throw std::runtime_error("Error: Hand not initialized");
         }
 
-        std::vector<int> motor_ids = {31, 32, 33, 34, 35, 36, 37, 38};
+        std::vector<int> motor_ids = {41, 42, 43, 44, 45, 46, 47, 48};
         std::vector<float> motor_positions = {1000, 1000, 1000, 1000, 1000, 1000, 1000, 1000};
         
         hand_->moveMotors(motor_ids, motor_positions);
